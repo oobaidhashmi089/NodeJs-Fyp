@@ -213,7 +213,7 @@ app.put('/admin/widgets/:id/approve', adminMiddleware, async (req, res) => {
 
 app.put('/admin/widgets/:id/reject', adminMiddleware, async (req, res) => {
   const { id } = req.params;
-  const widget = await Widget.findByIdAndUpdate(id, { approved: false ,status : 'Reject' }, { new: true });
+  const widget = await Widget.findByIdAndUpdate(id, { approved: false ,status : 'Rejected' }, { new: true });
   if (!widget) return res.status(404).send('Widget not found');
   res.json(widget);
 });
