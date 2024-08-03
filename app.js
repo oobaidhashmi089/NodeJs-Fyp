@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
     return res.status(400).send('Invalid credentials');
   }
   const token = jwt.sign({ userId: user._id }, 'secretKey');
-  res.json({ token });
+  res.json({ token ,isAdmin  });
 });
 
 const authMiddleware = (req, res, next) => {
