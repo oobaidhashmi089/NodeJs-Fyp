@@ -162,6 +162,18 @@ app.get('/widgets', async (req, res) => {
   res.json(widgets);
 });
 
+app.get('/my-widgets/:id', authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const widget = await Widget.findOne({ _id: id, owner: req.userId });
+    if (!widget) return res.status(404).send('Widget not found or you do not have permission to view it');
+    res.json(widget);
+  } catch (error) {
+    console.error('Error fetching widget:', error);
+    res.status(500).send('Server error');
+  }
+});
+
 app.get('/my-widgets', authMiddleware, async (req, res) => {
   const widgets = await Widget.find({ owner: req.userId });
   res.json(widgets);
