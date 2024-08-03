@@ -175,12 +175,12 @@ app.delete('/widgets/:id', authMiddleware, async (req, res) => {
 });
 
 app.get('/approvedwidgets', async (req, res) => {
-  const widgets = await Widget.find({ approved: true ,status: 'Approved' }).populate('owner', 'username');
+  const widgets = await Widget.find({ approved: true }).populate('owner', 'username');
   res.json(widgets);
 });
 
 app.get('/widgets', async (req, res) => {
-  const widgets = await Widget.find({ approved: false ,status: 'Rejected' }).populate('owner', 'username');
+  const widgets = await Widget.find({ approved: false  }).populate('owner', 'username');
   res.json(widgets);
 });
 
