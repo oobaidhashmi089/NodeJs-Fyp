@@ -26,8 +26,11 @@ const userSchema = new mongoose.Schema({
 
 const widgetSchema = new mongoose.Schema({
   widgetName: { type: String, required: true },
-  
-  status: { type: String, default: 'pending' },
+    status: {
+    type: String,
+    enum: ['Pending', 'Approved', 'Rejected'],
+    default: 'Pending'
+  },
   code: { type: String, required: true },
   category: { type: String, required: true },
   Image : {data: Buffer, type: String , required:true },
@@ -203,14 +206,14 @@ app.get('/my-widgets', authMiddleware, async (req, res) => {
 
 app.put('/admin/widgets/:id/approve', adminMiddleware, async (req, res) => {
   const { id } = req.params;
-  const widget = await Widget.findByIdAndUpdate(id, { approved: true }, { new: true });
+  const widget = await Widget.findByIdAndUpdate(id, { approved: true ,status : 'Approved'}, { new: true });
   if (!widget) return res.status(404).send('Widget not found');
   res.json(widget);
 });
 
 app.put('/admin/widgets/:id/reject', adminMiddleware, async (req, res) => {
   const { id } = req.params;
-  const widget = await Widget.findByIdAndUpdate(id, { approved: false }, { new: true });
+  const widget = await Widget.findByIdAndUpdate(id, { approved: false ,status : 'Reject' }, { new: true });
   if (!widget) return res.status(404).send('Widget not found');
   res.json(widget);
 });
