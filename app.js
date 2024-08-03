@@ -49,15 +49,37 @@ app.post('/register', async (req, res) => {
   res.status(201).send('User registered');
 });
 
+// app.post('/login', async (req, res) => {
+//   const { email, password } = req.body;
+//   const user = await User.findOne({ email });
+//   if (!user || !await bcrypt.compare(password, user.password)) {
+//     return res.status(400).send('Invalid credentials');
+//   }
+//   const token = jwt.sign({ userId: user._id }, 'secretKey');
+//   res.json({token});
+// });
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+  
   if (!user || !await bcrypt.compare(password, user.password)) {
     return res.status(400).send('Invalid credentials');
   }
+  
   const token = jwt.sign({ userId: user._id }, 'secretKey');
-  res.json({token});
+  
+  res.json({
+    token,
+    user: {
+      id: user._id,
+      isAdmin: user.isAdmin
+    }
+  });
 });
+
+
+
+
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
