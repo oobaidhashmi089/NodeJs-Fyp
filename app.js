@@ -145,7 +145,7 @@ app.put('/widgets/:id', authMiddleware, async (req, res) => {
   res.json(widget);
 });
 
-app.delete('/widgets/:id', adminMiddleware, async (req, res) => {
+app.delete('/widgets/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const widget = await Widget.findByIdAndDelete(id);
   if (!widget) return res.status(404).send('Widget not found');
