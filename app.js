@@ -122,13 +122,31 @@ app.post('/widgets', authMiddleware, async (req, res) => {
   res.status(201).send('Widget created and pending approval');
 });
 
+// app.put('/widgets/:id', authMiddleware, async (req, res) => {
+//   const { id } = req.params;
+//   const { widgetName, code, category, Image } = req.body;
+//   const widget = await Widget.findOneAndUpdate({ _id: id, owner: req.userId }, { widgetName, code, category, Image }, { new: true });
+//   if (!widget) return res.status(404).send('Widget not found');
+//   res.json(widget);
+// });
+
 app.put('/widgets/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const { widgetName, code, category, Image } = req.body;
-  const widget = await Widget.findOneAndUpdate({ _id: id, owner: req.userId }, { widgetName, code, category, Image }, { new: true });
-  if (!widget) return res.status(404).send('Widget not found');
+  // Ensure that only the owner can update the widget
+  const widget = await Widget.findOne({ _id: id, owner: req.userId });
+  if (!widget) return res.status(404).send('Widget not found or unauthorized');
+  widget.widgetName = widgetName;
+  widget.code = code;
+  widget.category = category;
+  widget.Image = Image;
+  widget.updateDate = Date.now();
+  await widget.save();
   res.json(widget);
 });
+
+
+
 
 app.delete('/widgets/:id', adminMiddleware, async (req, res) => {
   const { id } = req.params;
