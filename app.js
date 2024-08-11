@@ -208,11 +208,6 @@ app.post('/widgets', authMiddleware, (req, res) => {
     }
   });
 });
-
-<<<<<<< HEAD
-
-=======
->>>>>>> a6424a7709aba8644b95187d59ec0801eb133ae8
 // app.put('/widgets/:id', authMiddleware, async (req, res) => {
 //   const { id } = req.params;
 //   const { widgetName, code, category, Image } = req.body;
@@ -221,7 +216,6 @@ app.post('/widgets', authMiddleware, (req, res) => {
 //   res.json(widget);
 // });
 
-<<<<<<< HEAD
 // app.put('/widgets/:id', authMiddleware, async (req, res) => {
 //   const { id } = req.params;
 //   const { widgetName, code, category, Image } = req.body;
@@ -281,7 +275,7 @@ app.put('/widgets/:id', authMiddleware, (req, res) => {
 
 
 
-=======
+
 app.put('/widgets/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const { widgetName, code, category, Image } = req.body;
@@ -297,7 +291,7 @@ app.put('/widgets/:id', authMiddleware, async (req, res) => {
   res.json(widget);
 });
 
->>>>>>> a6424a7709aba8644b95187d59ec0801eb133ae8
+
 app.delete('/widgets/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const widget = await Widget.findByIdAndDelete(id);
