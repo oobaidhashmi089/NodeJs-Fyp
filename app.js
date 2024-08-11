@@ -209,7 +209,10 @@ app.post('/widgets', authMiddleware, (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a6424a7709aba8644b95187d59ec0801eb133ae8
 // app.put('/widgets/:id', authMiddleware, async (req, res) => {
 //   const { id } = req.params;
 //   const { widgetName, code, category, Image } = req.body;
@@ -218,6 +221,7 @@ app.post('/widgets', authMiddleware, (req, res) => {
 //   res.json(widget);
 // });
 
+<<<<<<< HEAD
 // app.put('/widgets/:id', authMiddleware, async (req, res) => {
 //   const { id } = req.params;
 //   const { widgetName, code, category, Image } = req.body;
@@ -277,6 +281,23 @@ app.put('/widgets/:id', authMiddleware, (req, res) => {
 
 
 
+=======
+app.put('/widgets/:id', authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { widgetName, code, category, Image } = req.body;
+  // Ensure that only the owner can update the widget
+  const widget = await Widget.findOne({ _id: id, owner: req.userId });
+  if (!widget) return res.status(404).send('Widget not found or unauthorized');
+  widget.widgetName = widgetName;
+  widget.code = code;
+  widget.category = category;
+  widget.Image = Image;
+  widget.updateDate = Date.now();
+  await widget.save();
+  res.json(widget);
+});
+
+>>>>>>> a6424a7709aba8644b95187d59ec0801eb133ae8
 app.delete('/widgets/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const widget = await Widget.findByIdAndDelete(id);
