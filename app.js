@@ -63,7 +63,7 @@ const widgetSchema = new mongoose.Schema({
   },
   code: { type: String, required: true },
   category: { type: String, required: true },
-  Image : {data: Buffer, type: String , required:true },
+  Image: { type: String, required: true },
   approvalDate: { type: Date },
   uploadDate: { type: Date, default: Date.now },
   updateDate: { type: Date },
